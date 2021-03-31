@@ -18,10 +18,6 @@ const appointmentStatusModel: ModelCreatorFunc<AppointmentStatusEntity> = (seque
     },
   );
 
-  AppointmentStatusModel.hasMany(sequelize.models.appointment, {
-    foreignKey: 'appointmentStatusId',
-  });
-
   return AppointmentStatusModel;
 };
 

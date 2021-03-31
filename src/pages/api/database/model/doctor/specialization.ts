@@ -15,11 +15,6 @@ const specializationModel: ModelCreatorFunc<SpecializationEntity> = (sequelize, 
     },
   });
 
-  SpecializationModel.belongsToMany(sequelize.models.doctor, {
-    through: sequelize.models.doctorSpecialization,
-    foreignKey: 'specializationId',
-  });
-
   return SpecializationModel;
 };
 

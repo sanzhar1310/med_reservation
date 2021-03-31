@@ -1,6 +1,6 @@
 export interface AppointmentEntity {
   id: string;
-  userAccountId: string;
+  userPatientId: string;
   clinicId: string;
   probableStartTime: string;
   actualEndTime: string;

@@ -18,10 +18,6 @@ const appBookingChannelModel: ModelCreatorFunc<AppBookingChannelEntity> = (seque
     },
   );
 
-  AppBookingChannelModel.hasMany(sequelize.models.appointment, {
-    foreignKey: 'appBookingChannelId',
-  });
-
   return AppBookingChannelModel;
 };
 

@@ -1,8 +1,9 @@
 import { ApolloServer } from 'apollo-server-micro';
+import db from './database';
 import { resolvers } from './resolvers';
-import { typeDefs } from './schemas';
+import { schema } from './schema';
 
-const apolloServer = new ApolloServer({ typeDefs, resolvers });
+const apolloServer = new ApolloServer({ schema, resolvers, context: { db } });
 
 export const config = {
   api: {

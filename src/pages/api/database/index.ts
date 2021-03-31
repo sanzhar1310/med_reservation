@@ -1,5 +1,5 @@
 import { DataTypes, Sequelize } from 'sequelize';
-import { Models, Sqlize } from './interface';
+import { DB, Sqlize } from './interface';
 
 import appointmentModel from './model/appointment/appointment';
 import appBookingChannelModel from './model/appointment/appBookingChannel';
@@ -34,30 +34,57 @@ const sequelize = new Sequelize(DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSW
   },
 }) as Sqlize;
 
-interface DB {
-  Sequelize: typeof Sqlize;
-  sequelize: Sqlize;
-  models: Models;
-}
+const models = {
+  Appointment: appointmentModel(sequelize, DataTypes),
+  AppBookingChannel: appBookingChannelModel(sequelize, DataTypes),
+  AppointmentStatus: appointmentStatusModel(sequelize, DataTypes),
+  Doctor: doctorModel(sequelize, DataTypes),
+  DoctorSpecialization: doctorSpecializationModel(sequelize, DataTypes),
+  HospitalAffiliation: hospitalAffiliationModel(sequelize, DataTypes),
+  InNetworkInsurance: inNetworkInsuranceModel(sequelize, DataTypes),
+  Clinic: clinicModel(sequelize, DataTypes),
+  ClinicDoctorAvailability: clinicClinicAvailabilityModel(sequelize, DataTypes),
+  PatientAccount: patientAccountModel(sequelize, DataTypes),
+  PatientReview: patientReviewModel(sequelize, DataTypes),
+  Qualification: qualificationModel(sequelize, DataTypes),
+  Specialization: specializationModel(sequelize, DataTypes),
+};
+
+models.Doctor.hasMany(models.Qualification, { foreignKey: 'doctorId' });
+models.Doctor.belongsToMany(models.Specialization, {
+  through: models.DoctorSpecialization,
+  foreignKey: 'doctorId',
+});
+models.Doctor.hasMany(models.Clinic, { foreignKey: 'doctorId' });
+models.Doctor.hasMany(models.PatientReview, { foreignKey: 'doctorId' });
+models.Doctor.hasMany(models.HospitalAffiliation, { foreignKey: 'doctorId' });
+
+models.HospitalAffiliation.hasMany(models.Clinic, { foreignKey: 'hospitalAffiliationId' });
+
+models.Specialization.belongsToMany(models.Doctor, {
+  through: models.DoctorSpecialization,
+  foreignKey: 'specializationId',
+});
+
+models.PatientAccount.hasMany(models.PatientReview, { foreignKey: 'userPatientId' });
+models.PatientAccount.hasMany(models.Appointment, { foreignKey: 'userPatientId' });
+
+models.AppBookingChannel.hasMany(models.Appointment, {
+  foreignKey: 'appBookingChannelId',
+});
+
+models.AppointmentStatus.hasMany(models.Appointment, {
+  foreignKey: 'appointmentStatusId',
+});
+
+models.Clinic.hasMany(models.Appointment, { foreignKey: 'clinicId' });
+models.Clinic.hasMany(models.ClinicDoctorAvailability, { foreignKey: 'clinicId' });
+models.Clinic.hasMany(models.InNetworkInsurance, { foreignKey: 'clinicId' });
 
 const db: DB = {
   Sequelize: Sequelize as typeof Sqlize,
   sequelize,
-  models: {
-    appointment: appointmentModel(sequelize, DataTypes),
-    appBookingChannel: appBookingChannelModel(sequelize, DataTypes),
-    appointmentStatus: appointmentStatusModel(sequelize, DataTypes),
-    doctor: doctorModel(sequelize, DataTypes),
-    doctorSpecialization: doctorSpecializationModel(sequelize, DataTypes),
-    hospitalAffiliation: hospitalAffiliationModel(sequelize, DataTypes),
-    inNetworkInsurance: inNetworkInsuranceModel(sequelize, DataTypes),
-    clinic: clinicModel(sequelize, DataTypes),
-    clinicDoctorAvailability: clinicClinicAvailabilityModel(sequelize, DataTypes),
-    patientAccount: patientAccountModel(sequelize, DataTypes),
-    patientReview: patientReviewModel(sequelize, DataTypes),
-    qualification: qualificationModel(sequelize, DataTypes),
-    specialization: specializationModel(sequelize, DataTypes),
-  },
+  models,
 };
 
 export default db;

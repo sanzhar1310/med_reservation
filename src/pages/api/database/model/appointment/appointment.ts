@@ -9,7 +9,7 @@ const appointmentModel: ModelCreatorFunc<AppointmentEntity> = (sequelize, type) 
       defaultValue: type.UUIDV4,
       primaryKey: true,
     },
-    userAccountId: {
+    userPatientId: {
       type: type.UUID,
       allowNull: false,
     },

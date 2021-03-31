@@ -13,15 +13,15 @@ function createApolloClient(): ApolloClient<NormalizedCacheObject> {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: new HttpLink({
-      uri: 'med-reservio',
+      uri: '/api/graphql',
     }),
     cache: new InMemoryCache(),
   });
 }
 
-export function initializeApollo(
-  initialState: Record<string, StoreObject | undefined> | null = null,
-): ApolloClient<NormalizedCacheObject> {
+type State = Record<string, StoreObject | undefined> | null;
+
+export function initializeApollo(initialState: State = null): ApolloClient<NormalizedCacheObject> {
   const _apolloClient = apolloClient ?? createApolloClient();
 
   if (initialState) {

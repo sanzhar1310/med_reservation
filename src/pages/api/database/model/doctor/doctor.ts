@@ -27,17 +27,6 @@ const doctorModel: ModelCreatorFunc<DoctorEntity> = (sequelize, type) => {
     },
   });
 
-  const { models } = sequelize;
-
-  DoctorModel.hasMany(models.qualification, { foreignKey: 'doctorId' });
-  DoctorModel.belongsToMany(models.specialization, {
-    through: models.doctorSpecialization,
-    foreignKey: 'doctorId',
-  });
-  DoctorModel.hasMany(models.clinic, { foreignKey: 'doctorId' });
-  DoctorModel.hasMany(models.patientReview, { foreignKey: 'doctorId' });
-  DoctorModel.hasMany(models.hospitalAffiliation, { foreignKey: 'doctorId' });
-
   return DoctorModel;
 };
 

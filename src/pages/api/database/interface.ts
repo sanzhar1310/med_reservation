@@ -20,24 +20,30 @@ import {
 } from '../../../entities/appointment';
 
 export interface Models {
-  doctor: ModelCtor<Model<DoctorEntity>>;
-  doctorSpecialization: ModelCtor<Model<DoctorSpecializationEntity>>;
-  hospitalAffiliation: ModelCtor<Model<HospitalAffiliationEntity>>;
-  qualification: ModelCtor<Model<QualificationEntity>>;
-  specialization: ModelCtor<Model<SpecializationEntity>>;
-  patientAccount: ModelCtor<Model<PatientAccountEntity>>;
-  patientReview: ModelCtor<Model<PatientReviewEntity>>;
-  clinic: ModelCtor<Model<ClinicEntity>>;
-  clinicDoctorAvailability: ModelCtor<Model<ClinicDoctorAvailabilityEntity>>;
-  inNetworkInsurance: ModelCtor<Model<InNetworkInsuranceEntity>>;
-  appointment: ModelCtor<Model<AppointmentEntity>>;
-  appointmentStatus: ModelCtor<Model<AppointmentStatusEntity>>;
-  appBookingChannel: ModelCtor<Model<AppBookingChannelEntity>>;
+  Doctor: ModelCtor<Model<DoctorEntity>>;
+  DoctorSpecialization: ModelCtor<Model<DoctorSpecializationEntity>>;
+  HospitalAffiliation: ModelCtor<Model<HospitalAffiliationEntity>>;
+  Qualification: ModelCtor<Model<QualificationEntity>>;
+  Specialization: ModelCtor<Model<SpecializationEntity>>;
+  PatientAccount: ModelCtor<Model<PatientAccountEntity>>;
+  PatientReview: ModelCtor<Model<PatientReviewEntity>>;
+  Clinic: ModelCtor<Model<ClinicEntity>>;
+  ClinicDoctorAvailability: ModelCtor<Model<ClinicDoctorAvailabilityEntity>>;
+  InNetworkInsurance: ModelCtor<Model<InNetworkInsuranceEntity>>;
+  Appointment: ModelCtor<Model<AppointmentEntity>>;
+  AppointmentStatus: ModelCtor<Model<AppointmentStatusEntity>>;
+  AppBookingChannel: ModelCtor<Model<AppBookingChannelEntity>>;
   [key: string]: ModelCtor<Model>;
 }
 
 export class Sqlize extends Sequelize {
   public readonly models!: Models;
+}
+
+export interface DB {
+  Sequelize: typeof Sqlize;
+  sequelize: Sqlize;
+  models: Models;
 }
 
 export interface ModelCreatorFunc<ModelAttributes = unknown> {

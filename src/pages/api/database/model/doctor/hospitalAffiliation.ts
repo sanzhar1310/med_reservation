@@ -30,8 +30,6 @@ const hospitalAffiliationModel: ModelCreatorFunc<HospitalAffiliationEntity> = (s
     },
   );
 
-  HospitalAffiliationModel.hasMany(sequelize.models.clinic);
-
   return HospitalAffiliationModel;
 };
 

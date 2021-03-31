@@ -51,11 +51,6 @@ const clinicModel: ModelCreatorFunc<ClinicEntity> = (sequelize, type) => {
     },
   });
 
-  const { models } = sequelize;
-  ClinicModel.hasMany(models.appointment, { foreignKey: 'clinicId' });
-  ClinicModel.hasMany(models.clinicDoctorAvailability, { foreignKey: 'clinicId' });
-  ClinicModel.hasMany(models.inNetworkInsurance, { foreignKey: 'clinicId' });
-
   return ClinicModel;
 };
 
