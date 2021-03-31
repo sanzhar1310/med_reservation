@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server-micro';
-import db from './database';
+import db from '../database';
 import { resolvers } from './resolvers';
 import { schema } from './schema';
 
